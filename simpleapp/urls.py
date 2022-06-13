@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import Products  # импортируем наше представление
+from .views import Products, ProductDetailView, ProductCreateView, ProductUpdateView, ProductDeleteView
  
  
 urlpatterns = [
-    # path — означает путь. В данном случае путь ко всем товарам у нас останется пустым, позже станет ясно почему
     path('', Products.as_view()),
+    path('<int:pk>/', ProductDetailView.as_view(), name='product_detail'), # Ссылка на детали товара
+    path('create/', ProductCreateView.as_view(), name='product_create'), # Ссылка на создание товара
 ]

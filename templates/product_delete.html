@@ -1,14 +1,8 @@
 {% extends 'flatpages/default.html' %}
-
  
-{% block title %}
-Products
-{% endblock title %}
+{% block title %} Product list {% endblock title %}
  
 {% block content %}
- 
- 
-<!-- Перед таблицей добавим форму для поиска -->
 <table>
     <thead>
         <th>
@@ -27,7 +21,10 @@ Products
     {% for product in filter.qs %} <!-- поменяем products на filter.qs, т.к. теперь мы забираем уже отобранную по каким-то параметрам информацию -->
     <tr>
         <td>
-            <a href="{% url 'product_detail' product.id %}">{{ product.name|title }}</a> <!-- При нажатии на имя товара в таблице нас теперь будет перекидывать на страницу с информацией о товаре -->
+            <a href="{% url 'product_detail' product.id %}">{{ product.name|title }}</a> <!-- При нажатии на имя товара в таблцие нас теперь будет перекидывать на страницу с самого товара -->
+            <a href="{% url 'product_update' product.id %}"><u>Редактировать</u></a> <!-- добавим ссылку на редактирование товара-->
+ 
+            <a href="{% url 'product_delete' product.id %}"><u> Удалить </u></a> <!-- добавим ссылку на удаление товара-->
         </td>
         <td>
             {{ product.category.name|title }}
@@ -41,6 +38,10 @@ Products
     </tr>
     {% endfor %}
 </table>
+ 
+<a href="{% url 'product_create' %}">Добавить новый товар</a> <br>
+ 
+ 
 {% if is_paginated %}
  
     {% if page_obj.has_previous %}
@@ -59,7 +60,8 @@ Products
     {% if page_obj.has_next %}
         <a href="?page={{ page_obj.next_page_number }}">>>></a>
         <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-    {% endif %}
- 
+    {% endif %} 
 {% endif %}
+<br>
+ 
 {% endblock content %}
